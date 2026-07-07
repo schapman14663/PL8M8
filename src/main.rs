@@ -1,5 +1,49 @@
+use std::io
+
 fn main() {
     println!("Hello, world!");
+
+    let mut weight = String::new();
+    let mut increment = String::new();
+
+    loop {
+        println!("Please Enter the Weight you are meant to be doing this set:");
+        
+        io::stdin()
+            .read_line(&mut weight)
+            .expect("Failed to read line");
+
+        let weight: f32 = match weight.trim().parse() {
+            Ok(num) => num, break,
+            Err(_) => "No a number", continue,
+        };
+    }
+
+    println!("Please Enter the Weight you are meant to be doing this set:");
+    
+    io::stdin()
+        .read_line(&mut weight)
+        .expect("Failed to read line");
+
+    let weight: f32 = match weight.trim().parse() {
+        Ok(num) => num,
+        Err(_) => "No a number", continue,
+    };
+
+    println!("Please Enter the smallest weight increment available\0 (e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
+
+    io::stdin()
+        .read_line(&mut increment)
+        .expect("Failed to read line");
+    
+    let increment: f32 = match increment.trim().parse() {
+        Ok(num) => num,
+        Err(_) => "No a number", continue,
+    };
+
+    println!("Your Set Weight is {weight} and your increments are {increment}");
+
+ 
 }
 
 enum Rounding_Type {
@@ -13,14 +57,25 @@ enum Units {
     imperial
 }
 
+//Yep, we are hardcoding a division. Specifically, a divsision such that we get a remainder, in
+//much the same way that a modulo function would.
+fn weight_division(weight: f32, increment: f32) -> f32, f32 {
+    let mut result = 0;
+    let remainder = weight;
+    loop {
+        remainder = weight - increment;
+        result = result + 1;
+    };
+}
+
 //rounding down is floor division
 //ex floor(122.7/2.5) = 49
 //
-//you can get the number following the decimal (in the above example: 0.08) by doing the followin:
+//you can get the number following the decimal (in the above example: 0.08) by doing the following:
 //(X % Y)/ Y
-//then to round down subtract this from the original division.
-fn round_down(weight: f32, incrememnt: f32) -> f32 {
-
+//then to round down subtract this from the original division. 
+fn round_down(weight: f32, increment: f32) -> f32 {
+    
 }
 
 //rounding up is ceiling division
