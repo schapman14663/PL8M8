@@ -14,33 +14,22 @@ fn main() {
             .expect("Failed to read line");
 
         let weight: f32 = match weight.trim().parse() {
-            Ok(num) => (num, break),
-            Err(_) => ("No a number", continue),
+            Ok(num) => (num, break), //TODO: fix handling
+            Err(_) => ("No a number", continue), //TODO: fix error handling 
         };
     }
 
-    println!("Please Enter the Weight you are meant to be doing this set:");
+    println!("Please Enter the smallest weight increment available\0 (e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
     loop {
         io::stdin()
-            .read_line(&mut weight)
+            .read_line(&mut increment)
             .expect("Failed to read line");
 
-        let weight: f32 = match weight.trim().parse() {
-            Ok(num) => (num, break),
-            Err(_) => ("No a number", continue),
+        let increment: f32 = match increment.trim().parse() {
+            Ok(num) => (num, break), //TODO: fix handling
+            Err(_) => ("No a number", continue), //TODO: fix handling
         };
     }; 
-
-    println!("Please Enter the smallest weight increment available\0 (e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
-
-    io::stdin()
-        .read_line(&mut increment)
-        .expect("Failed to read line");
-    
-    let increment: f32 = match increment.trim().parse() {
-        Ok(num) => num,
-        Err(_) => "No a number", continue,
-    };
 
     println!("Your Set Weight is {weight} and your increments are {increment}");
 
@@ -62,7 +51,7 @@ enum Units {
 //much the same way that a modulo function would.
 fn weight_division(weight: f32, increment: f32) -> (f32, f32) {
     let mut result = 0;
-    let remainder = weight;
+    let mut remainder = weight;
     loop {
         remainder = weight - increment;
         result = result + 1;
