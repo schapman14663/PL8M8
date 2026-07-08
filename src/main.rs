@@ -47,15 +47,15 @@ fn main() {
  
 }
 
-enum Rounding_Type {
-    smart,
-    always_down,
-    always_up
+enum RoundingType {
+    Smart,
+    AlwaysDown,
+    AlwaysUp
 }
 
 enum Units {
-    metric,
-    imperial
+    Metric,
+    Imperial
 }
 
 //Yep, we are hardcoding a division. Specifically, a divsision such that we get a remainder, in
