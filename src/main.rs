@@ -54,8 +54,11 @@ fn weight_division(weight: f32, increment: f32) -> (f32, f32) {
     let mut remainder = weight;
     loop {
         remainder = weight - increment;
+        //TODO: Add a debugging print line here.
         result = result + 1;
+        //TODO: Add a debugging print line here.
     };
+    //TODO: Still needs a return
 }
 
 //rounding down is floor division
