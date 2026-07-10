@@ -58,7 +58,7 @@ fn weight_division(weight: f32, increment: f32) -> (f32, f32) {
         result = result + 1;
         //TODO: Add a debugging print line here.
     };
-    //TODO: Still needs a return
+    (result, remainder)//TODO: Still needs a return
 }
 
 //rounding down is floor division
@@ -68,7 +68,10 @@ fn weight_division(weight: f32, increment: f32) -> (f32, f32) {
 //(X % Y)/ Y
 //then to round down subtract this from the original division. 
 fn round_down(weight: f32, increment: f32) -> f32 {
-    
+    let (w, _) = weight_division(weight, increment) //Like I obviously need to tidy up some of
+    //these comments, but the result part of the weight_division function is always going to be 
+    //the rounded down version of the divsion. So nothing fancy needs to be done with the
+    //remainder.
 }
 
 //rounding up is ceiling division
