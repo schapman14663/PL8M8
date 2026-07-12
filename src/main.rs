@@ -50,12 +50,12 @@ enum Units {
 //Yep, we are hardcoding a division. Specifically, a divsision such that we get a remainder, in
 //much the same way that a modulo function would.
 fn weight_division(weight: f32, increment: f32) -> (f32, f32) {
-    let mut result = 0;
+    let mut result = 0.0;
     let mut remainder = weight;
     while remainder > increment {
         remainder = weight - increment;
         //TODO: Add a debugging print line here.
-        result = result + 1;
+        result = result + 1.0;
         //TODO: Add a debugging print line here.
     };
     (result, remainder)
@@ -69,7 +69,8 @@ fn weight_division(weight: f32, increment: f32) -> (f32, f32) {
 //then to round down subtract this from the original division. 
 fn round_down(weight: f32, increment: f32) -> f32 {
     let (w, _) = weight_division(weight, increment);
-    w
+    let rounded_weight = w * increment;
+    rounded_weight
     //Like I obviously need to tidy up some of
     //these comments, but the result part of the weight_division function is always going to be 
     //the rounded down version of the divsion. So nothing fancy needs to be done with the
@@ -82,9 +83,12 @@ fn round_down(weight: f32, increment: f32) -> f32 {
 fn round_up(weight: f32, increment: f32) -> f32 {
     let (w, r) = weight_division(weight, increment);
     if r > 0.0 {
-        let w += 1.0
-    };
-    return w;
+        let rounded_weight = (w + 1.0) * increment;
+        rounded_weight
+    } else {
+        let rounded_weight = w * increment;
+        rounded_weight
+    }
     //Not sure if this is actually written properly but, I guess we'll find out.
 }
 
