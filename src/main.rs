@@ -96,7 +96,13 @@ fn round_up(weight: f32, increment: f32) -> f32 {
 //the rules above apply, but for smart division we would run the rounding up check, then if (1 -
 //result) is above 0.5 apply the round up rule, otherwise apply the round down down rule.
 fn smart_round(weight: f32, increment: f32) -> f32 {
-
+    let (_,r) = weight_division(weight, increment);
+    let remainder_ratio = r/increment;
+    if remainder_ratio > 0.5 {
+        round_up(weight, increment)
+    } else {
+        round_down(weight, increment)
+    }
 }
 
 //standard barbell is 20kg or 45lbs and additional weight would be added to each side.
