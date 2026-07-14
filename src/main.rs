@@ -8,28 +8,24 @@ fn main() {
 
 
     println!("Please Enter the Weight you are meant to be doing this set:");
-    loop {
         io::stdin()
             .read_line(&mut weight)
             .expect("Failed to read line");
 
         let weight: f64 = match weight.trim().parse() {
-            Ok(num) => (num, break), //TODO: fix handling
-            Err(_) => ("No a number", continue), //TODO: fix error handling 
+            Ok(num) => num,
+            Err(_) => get_weight(),
         };
-    }
 
     println!("Please Enter the smallest weight increment available\0 (e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
-    loop {
         io::stdin()
             .read_line(&mut increment)
             .expect("Failed to read line");
 
         let increment: f64 = match increment.trim().parse() {
-            Ok(num) => (num, break), //TODO: fix handling
-            Err(_) => ("No a number", continue), //TODO: fix handling
+            Ok(num) => num,
+            Err(_) => get_increment(),
         };
-    }; 
 
     println!("Your Set Weight is {weight} and your increments are {increment}");
 
@@ -45,6 +41,35 @@ enum RoundingType {
 enum Units {
     Metric,
     Imperial
+}
+
+fn get_weight() -> f64 {
+    let mut weight = String::new();
+    println!("Number not found, please enter a number:");
+    io::stdin()
+        .read_line(&mut weight)
+        .expect("Failed to read line");
+
+    let weight: f64 = match weight.trim().parse() {
+        Ok(num) => num, 
+        Err(_) => get_weight(),
+    };
+    weight
+}
+
+fn get_increment() -> f64 {
+    let mut increment = String::new();
+    println!("Number not found, please enter a number:");
+    //eprintln!("Type Found: {}", Err);
+    io::stdin()
+        .read_line(&mut increment)
+        .expect("Failed to read line");
+
+    let increment: f64 = match increment.trim().parse() {
+        Ok(num) => num,
+        Err(_) => get_increment(),
+    };
+    increment
 }
 
 //Yep, we are hardcoding a division. Specifically, a divsision such that we get a remainder, in
