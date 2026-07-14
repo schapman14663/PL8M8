@@ -29,7 +29,9 @@ fn main() {
 
     println!("Your Set Weight is {weight} and your increments are {increment}");
 
- 
+    round_down(weight, increment);
+    round_up(weight, increment);
+    smart_round(weight, increment);
 }
 
 enum RoundingType {
@@ -77,12 +79,13 @@ fn get_increment() -> f64 {
 fn weight_division(weight: f64, increment: f64) -> (f64, f64) {
     let mut result = 0.0;
     let mut remainder = weight;
-    while remainder > increment {
-        remainder = weight - increment;
-        //TODO: Add a debugging print line here.
+    while remainder >= increment {
+        remainder -= increment;
+        println!("{:.2}", remainder);
         result = result + 1.0;
-        //TODO: Add a debugging print line here.
+        println!("{:.2}", result);
     };
+    println!("Division Result: {:.2} , Remainder: {:.2}", result, remainder);
     (result, remainder)
 }
 
@@ -95,6 +98,7 @@ fn weight_division(weight: f64, increment: f64) -> (f64, f64) {
 fn round_down(weight: f64, increment: f64) -> f64 {
     let (w, _) = weight_division(weight, increment);
     let rounded_weight = w * increment;
+    println!("When rounding down the weight is: {:.2}", rounded_weight);
     rounded_weight
     //Like I obviously need to tidy up some of
     //these comments, but the result part of the weight_division function is always going to be 
@@ -109,9 +113,11 @@ fn round_up(weight: f64, increment: f64) -> f64 {
     let (w, r) = weight_division(weight, increment);
     if r > 0.0 {
         let rounded_weight = (w + 1.0) * increment;
+        println!("When rounding up the weight is: {:.2}", rounded_weight);
         rounded_weight
     } else {
         let rounded_weight = w * increment;
+        println!("When rounding up the weight is: {:.2}", rounded_weight);
         rounded_weight
     }
     //Not sure if this is actually written properly but, I guess we'll find out.
