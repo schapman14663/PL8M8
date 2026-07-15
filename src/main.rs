@@ -1,11 +1,16 @@
 use std::io;
 
+//TODO: Clean Up Notes
+
 fn main() {
     println!("Hello, world!");
 
     let mut weight = String::new();
     let mut increment = String::new();
+    //TODO: SETUP: Imperial Weights List
+    //TODO: SETUP: Metric Weights List
 
+    //TODO: Get Weight Units Input
 
     println!("Please Enter the Weight you are meant to be doing this set:");
         io::stdin()
@@ -28,6 +33,8 @@ fn main() {
         };
 
     println!("Your Set Weight is {weight} and your increments are {increment}");
+    
+    //TODO: Get RoundingType Input
 
     round_down(weight, increment);
     round_up(weight, increment);
@@ -44,6 +51,12 @@ enum Units {
     Metric,
     Imperial
 }
+
+//TODO: Draft Function that turns Inputs into a map(?) indicating how many of which plates go on
+//each side. 
+
+//TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
+//plate changes needed to get to that weight. 
 
 fn get_weight() -> f64 {
     let mut weight = String::new();
