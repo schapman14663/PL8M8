@@ -7,8 +7,11 @@ fn main() {
 
     let mut weight = String::new();
     let mut increment = String::new();
+    let mut rounding = String::new();
     //TODO: SETUP: Imperial Weights List
+    let imperial_weight_plates = [55, 45, 25, 15, 10, 5, 2.5];
     //TODO: SETUP: Metric Weights List
+    let metric_weight_plates = [25, 20, 15, 10, 5, 2.5, 1.25];
 
     //TODO: Get Weight Units Input
 
@@ -35,7 +38,16 @@ fn main() {
     println!("Your Set Weight is {weight} and your increments are {increment}");
     
     //TODO: Get RoundingType Input
-
+    println!("Would you like to always round down, always round up, or round to the actual nearest increment?");
+/*        io::stdin()
+            .read_line(&mut rounding)
+            .expect("Failed to read line");
+        
+        let rounding: RoundingType = match rounding.trim().parse() {
+            Ok(RoundingType) => RoundingType,
+            Err(_) => panic!(),
+        };
+*/
     round_down(weight, increment);
     round_up(weight, increment);
     smart_round(weight, increment);
