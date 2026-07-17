@@ -9,9 +9,9 @@ fn main() {
     let mut increment = String::new();
     let mut rounding = String::new();
     //TODO: SETUP: Imperial Weights List
-    let imperial_weight_plates = [55, 45, 25, 15, 10, 5, 2.5];
+    let imperial_weight_plates: [f64; 7] = [55.0, 45.0, 25.0, 15.0, 10.0, 5.0, 2.5];
     //TODO: SETUP: Metric Weights List
-    let metric_weight_plates = [25, 20, 15, 10, 5, 2.5, 1.25];
+    let metric_weight_plates: [f64; 7] = [25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
 
     //TODO: Get Weight Units Input
 
@@ -38,20 +38,19 @@ fn main() {
     println!("Your Set Weight is {weight} and your increments are {increment}");
     
     //TODO: Get RoundingType Input
-    println!("Would you like to always round down, always round up, or round to the actual nearest increment?");
-/*        io::stdin()
+    println!("Would you like to round down, round up, or round to the actual nearest increment (smart)?");
+        io::stdin()
             .read_line(&mut rounding)
             .expect("Failed to read line");
         
-        let rounding: RoundingType = match rounding.trim().parse() {
-            Ok(RoundingType) => RoundingType,
-            Err(_) => panic!(),
+        let rounding: f64 = match rounding.trim().parse() {
+            "Smart" => {smart_round(weight, increment)},
+            "Down" => {round_up(weight, increment)},
+            "Up" => {round_down(weight, increment)},
+            _ => println!("Invalid Rounding Type"),
         };
-*/
-    round_down(weight, increment);
-    round_up(weight, increment);
-    smart_round(weight, increment);
 }
+
 
 enum RoundingType {
     Smart,
