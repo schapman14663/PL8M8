@@ -8,12 +8,22 @@ fn main() {
     let mut weight = String::new();
     let mut increment = String::new();
     let mut rounding = String::new();
-    //TODO: SETUP: Imperial Weights List
+    let mut units = String::new();
+
     let imperial_weight_plates: [f64; 7] = [55.0, 45.0, 25.0, 15.0, 10.0, 5.0, 2.5];
-    //TODO: SETUP: Metric Weights List
     let metric_weight_plates: [f64; 7] = [25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
 
     //TODO: Get Weight Units Input
+    println!("What units are we working with Kilograms (kg) or Pounds (lbs)?");
+        io::stdin()
+            .read_line(&mut units)
+            .expect("Failed to read line");
+        
+        let units: String = match units.trim().parse() {
+            "kg" => _,
+            "lbs" => _,
+            _ => "You need to enter either kg or lbs!"
+        };
 
     println!("Please Enter the Weight you are meant to be doing this set:");
         io::stdin()
