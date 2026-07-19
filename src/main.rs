@@ -19,7 +19,8 @@ fn main() {
             .read_line(&mut units)
             .expect("Failed to read line");
         
-        let units: String = match units.trim().parse() {
+        let units: String = match units.trim() { 
+        //parse.
             "kg" => _,
             "lbs" => _,
             _ => "You need to enter either kg or lbs!"
@@ -53,7 +54,7 @@ fn main() {
             .read_line(&mut rounding)
             .expect("Failed to read line");
         
-        let rounding: f64 = match rounding.trim().parse() {
+        let rounding: f64 = match rounding.trim() {
             "Smart" => {smart_round(weight, increment)},
             "Down" => {round_up(weight, increment)},
             "Up" => {round_down(weight, increment)},
