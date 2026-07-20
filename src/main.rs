@@ -13,19 +13,7 @@ fn main() {
     let imperial_weight_plates: [f64; 7] = [55.0, 45.0, 25.0, 15.0, 10.0, 5.0, 2.5];
     let metric_weight_plates: [f64; 7] = [25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
 
-    //TODO: Get Weight Units Input
-    println!("What units are we working with Kilograms (kg) or Pounds (lbs)?");
-        io::stdin()
-            .read_line(&mut units)
-            .expect("Failed to read line");
-        
-        let units: String = match units.trim() { 
-        //parse.
-            "kg" => _,
-            "lbs" => _,
-            _ => "You need to enter either kg or lbs!"
-        };
-
+ 
     println!("Please Enter the Weight you are meant to be doing this set:");
         io::stdin()
             .read_line(&mut weight)
@@ -58,8 +46,21 @@ fn main() {
             "Smart" => {smart_round(weight, increment)},
             "Down" => {round_up(weight, increment)},
             "Up" => {round_down(weight, increment)},
-            _ => println!("Invalid Rounding Type"),
+            _ => 0.0 
         };
+    
+    //TODO: Get Weight Units Input
+   /* println!("What units are we working with Kilograms (kg) or Pounds (lbs)?");
+        io::stdin()
+            .read_line(&mut units)
+            .expect("Failed to read line");
+        
+        let units: Units = match units.trim() { 
+            "kg" => units = Units::Metric,
+            "lbs" => units = Units::Imperial,
+            _ => "You need to enter either kg or lbs!"
+        };
+*/
 }
 
 
