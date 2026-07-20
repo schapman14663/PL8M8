@@ -8,7 +8,7 @@ fn main() {
     let mut weight = String::new();
     let mut increment = String::new();
     let mut rounding = String::new();
-    let mut units = String::new();
+    //let mut units = String::new();
 
     let imperial_weight_plates: [f64; 7] = [55.0, 45.0, 25.0, 15.0, 10.0, 5.0, 2.5];
     let metric_weight_plates: [f64; 7] = [25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
@@ -24,7 +24,7 @@ fn main() {
             Err(_) => get_weight(),
         };
 
-    println!("Please Enter the smallest weight increment available\0 (e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
+    println!("Please Enter the smallest weight increment available\n(e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
         io::stdin()
             .read_line(&mut increment)
             .expect("Failed to read line");
@@ -36,13 +36,12 @@ fn main() {
 
     println!("Your Set Weight is {weight} and your increments are {increment}");
     
-    //TODO: Get RoundingType Input
     println!("Would you like to round down, round up, or round to the actual nearest increment (smart)?");
         io::stdin()
             .read_line(&mut rounding)
             .expect("Failed to read line");
         
-        let rounding: f64 = match rounding.trim() {
+        let _rounding: f64 = match rounding.trim() {
             "Smart" => {smart_round(weight, increment)},
             "Down" => {round_up(weight, increment)},
             "Up" => {round_down(weight, increment)},
@@ -61,18 +60,6 @@ fn main() {
             _ => "You need to enter either kg or lbs!"
         };
 */
-}
-
-
-enum RoundingType {
-    Smart,
-    AlwaysDown,
-    AlwaysUp
-}
-
-enum Units {
-    Metric,
-    Imperial
 }
 
 //TODO: Draft Function that turns Inputs into a map(?) indicating how many of which plates go on
