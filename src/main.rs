@@ -64,6 +64,17 @@ fn main() {
 
 //TODO: Draft Function that turns Inputs into a map(?) indicating how many of which plates go on
 //each side. 
+fn plate_sort(weight: f64, increment: f64, available_plates: ??) -> ?? {
+    //available_plates will be the relevant metric/imperial plate set as indicated in the units
+    //section.
+    //
+    //let mut remainder = weight much like weight_divsion() works.
+    //
+    //loop through available_plates while plates > 2 * increment:
+    //  call division for weight and (plates * 2)
+    //  append (plates, result) to return type 
+    //  update remainder to (_, remainder) 
+}
 
 //TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
 //plate changes needed to get to that weight. 
