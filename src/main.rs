@@ -48,18 +48,16 @@ fn main() {
             _ => 0.0 
         };
     
-    //TODO: Get Weight Units Input
-   /* println!("What units are we working with Kilograms (kg) or Pounds (lbs)?");
+    println!("What units are we working with Kilograms (kg) or Pounds (lbs)?");
         io::stdin()
             .read_line(&mut units)
             .expect("Failed to read line");
         
-        let units: Units = match units.trim() { 
-            "kg" => units = Units::Metric,
-            "lbs" => units = Units::Imperial,
+        let units: String = match units.trim() { 
+            "kg" => units = plate_sort(weight, increment, metric_weight_plates),
+            "lbs" => plate_sort(weight, increment, imperial_weight_plates),
             _ => "You need to enter either kg or lbs!"
         };
-*/
 }
 
 //TODO: Draft Function that turns Inputs into a map(?) indicating how many of which plates go on
@@ -74,6 +72,7 @@ fn plate_sort(weight: f64, increment: f64, available_plates: ??) -> ?? {
     //  call division for weight and (plates * 2)
     //  append (plates, result) to return type 
     //  update remainder to (_, remainder) 
+    
 }
 
 //TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
