@@ -1,5 +1,7 @@
 use std::io;
+use crate::math_ops::div:weight_division;
 
+mod math_ops;
 //TODO: Clean Up Notes
 
 fn main() {
@@ -8,7 +10,7 @@ fn main() {
     let mut weight = String::new();
     let mut increment = String::new();
     let mut rounding = String::new();
-    //let mut units = String::new();
+    let mut units = String::new();
 
     let imperial_weight_plates: [f64; 7] = [55.0, 45.0, 25.0, 15.0, 10.0, 5.0, 2.5];
     let metric_weight_plates: [f64; 7] = [25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
@@ -54,7 +56,7 @@ fn main() {
             .expect("Failed to read line");
         
         let units: String = match units.trim() { 
-            "kg" => units = plate_sort(weight, increment, metric_weight_plates),
+            "kg" => plate_sort(weight, increment, metric_weight_plates),
             "lbs" => plate_sort(weight, increment, imperial_weight_plates),
             _ => "You need to enter either kg or lbs!"
         };
