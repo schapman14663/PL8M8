@@ -1,7 +1,13 @@
 use std::io;
-use crate::math_ops::div:weight_division;
+use crate::math_ops::weight_division;
+use crate::math_ops::rounding::round_up;
+use crate::math_ops::rounding::round_down;
+use crate::math_ops::rounding::smart_round;
+use crate::getters::get_float;
 
-mod math_ops;
+pub mod math_ops;
+pub mod getters;
+
 //TODO: Clean Up Notes
 
 fn main() {
@@ -17,31 +23,18 @@ fn main() {
 
  
     println!("Please Enter the Weight you are meant to be doing this set:");
-        io::stdin()
-            .read_line(&mut weight)
-            .expect("Failed to read line");
+    let weight = get_float(&mut weight);
 
-        let weight: f64 = match weight.trim().parse() {
-            Ok(num) => num,
-            Err(_) => get_weight(),
-        };
 
     println!("Please Enter the smallest weight increment available\n(e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
-        io::stdin()
-            .read_line(&mut increment)
-            .expect("Failed to read line");
+    let increment = get_float(&mut increment);
 
-        let increment: f64 = match increment.trim().parse() {
-            Ok(num) => num,
-            Err(_) => get_increment(),
-        };
 
     println!("Your Set Weight is {weight} and your increments are {increment}");
     
     println!("Would you like to round down, round up, or round to the actual nearest increment (smart)?");
         io::stdin()
-            .read_line(&mut rounding)
-            .expect("Failed to read line");
+            .read_line(&mut rounding);
         
         let _rounding: f64 = match rounding.trim() {
             "Smart" => {smart_round(weight, increment)},
@@ -52,8 +45,7 @@ fn main() {
     
     println!("What units are we working with Kilograms (kg) or Pounds (lbs)?");
         io::stdin()
-            .read_line(&mut units)
-            .expect("Failed to read line");
+            .read_line(&mut units);
         
         let units: String = match units.trim() { 
             "kg" => plate_sort(weight, increment, metric_weight_plates),
@@ -74,38 +66,8 @@ fn plate_sort(weight: f64, increment: f64, available_plates: ??) -> ?? {
     //  call division for weight and (plates * 2)
     //  append (plates, result) to return type 
     //  update remainder to (_, remainder) 
-    
 }
 
 //TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
 //plate changes needed to get to that weight. 
-
-fn get_weight() -> f64 {
-    let mut weight = String::new();
-    println!("Number not found, please enter a number:");
-    io::stdin()
-        .read_line(&mut weight)
-        .expect("Failed to read line");
-
-    let weight: f64 = match weight.trim().parse() {
-        Ok(num) => num, 
-        Err(_) => get_weight(),
-    };
-    weight
-}
-
-fn get_increment() -> f64 {
-    let mut increment = String::new();
-    println!("Number not found, please enter a number:");
-    //eprintln!("Type Found: {}", Err);
-    io::stdin()
-        .read_line(&mut increment)
-        .expect("Failed to read line");
-
-    let increment: f64 = match increment.trim().parse() {
-        Ok(num) => num,
-        Err(_) => get_increment(),
-    };
-    increment
-}
 
