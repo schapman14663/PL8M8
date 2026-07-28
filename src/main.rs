@@ -1,9 +1,11 @@
-use std::io;
-use crate::math_ops::{weight_division, rounding};
-use crate::getters::{get_float, get_rounding_type, get_unit_type};
+use std::{io, collections::HashMap};
+use crate::weight_math_ops::{weight_division, rounding};
+use crate::weight_getters::{get_float, get_rounding_type, get_unit_type};
+//use crate::weight_structs;
 
-pub mod math_ops;
-pub mod getters;
+pub mod weight_math_ops;
+pub mod weight_getters;
+//pub mod weight_structs;
 
 //TODO: Clean Up Notes
 
@@ -15,8 +17,8 @@ fn main() {
     let mut rounding_type = String::new();
     let mut unit_type = String::new();
 
-    let imperial_weight_plates: [f64; 7] = [55.0, 45.0, 25.0, 15.0, 10.0, 5.0, 2.5];
-    let metric_weight_plates: [f64; 7] = [25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
+    let mut imperial_weight_plates = HashMap::new(); 
+    let mut metric_weight_plates = HashMap::new();
 
     println!("Please Enter the Weight you are meant to be doing this set:");
     let weight = get_float(&mut weight);
@@ -27,15 +29,15 @@ fn main() {
     println!("Your Set Weight is {weight} and your increments are {increment}");
     
     println!("Would you like to round down, round up, or round to the actual nearest increment (smart)?");
-    let rounding_type = get_rounding_type(&mut rounding_type);
+    let rounding_type = get_rounding_type(&mut rounding_type, weight, increment);
 
     println!("What units are we working with Kilograms (kg) or Pounds (lbs)?");
-    let unit_type = get_unit_type(&mut unit_type);
+    let unit_type = get_unit_type(&mut unit_type, weight, increment);
 }
 
 //TODO: Draft Function that turns Inputs into a map(?) indicating how many of which plates go on
 //each side. 
-fn plate_sort(weight: f64, increment: f64, available_plates: ??) -> ?? {
+fn plate_sort<K, V>(weight: f64, increment: f64, available_plates: HashMap<K, V>) -> HashMap<K, V> {
     //available_plates will be the relevant metric/imperial plate set as indicated in the units
     //section.
     //
