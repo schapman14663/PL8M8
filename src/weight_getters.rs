@@ -32,6 +32,7 @@ pub fn get_rounding_type(input: &mut String, weight: f64, increment: f64) -> f64
     input
 }
 
+/*
 pub fn get_unit_type<K, V>(input: &mut String, weight: f64, increment: f64) -> HashMap<K, V> {
         io::stdin()
             .read_line(input);
@@ -45,4 +46,4 @@ pub fn get_unit_type<K, V>(input: &mut String, weight: f64, increment: f64) -> H
         }
     };
 }
-
+*/
