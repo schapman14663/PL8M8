@@ -1,10 +1,11 @@
-use std::{io, collections::HashMap};
+use std::io;
 use crate::weight_math_ops::{weight_division, rounding};
 
-//Unit function to take a Sting input and convert it into a float
+//Function to take a String input and convert it into a float
 pub fn get_float(input: &mut String) -> f64 {
     io::stdin()
-        .read_line(input);
+        .read_line(input)
+        .expect("error");
 
     let input: f64 = match input.trim().parse() {
         Ok(num) => num,
@@ -16,9 +17,11 @@ pub fn get_float(input: &mut String) -> f64 {
     input
 }
 
-pub fn get_rounding_type(input: &mut String, weight: f64, increment: f64) -> f64 {
+//Function to get a rounding type and then round the weight as indicated
+pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f64 {
     io::stdin()
-        .read_line(input);
+        .read_line(input)
+        .expect("error");
 
     let input: f64 = match input.trim() {
         "Smart" => {rounding::smart_round(weight, increment)},
@@ -26,24 +29,73 @@ pub fn get_rounding_type(input: &mut String, weight: f64, increment: f64) -> f64
         "Up" => {rounding::round_down(weight, increment)},
         _ => {
                 eprintln!("invalid input");
-                get_rounding_type(input, weight, increment)
+                get_rounded_weight(input, weight, increment)
         }
     };
     input
 }
 
-/*
-pub fn get_unit_type<K, V>(input: &mut String, weight: f64, increment: f64) -> HashMap<K, V> {
-        io::stdin()
-            .read_line(input);
-        
-        let input: String = match input.trim() { 
-            "kg" => plate_sort(weight, increment, metric_weight_plates),
-            "lbs" => plate_sort(weight, increment, imperial_weight_plates),
-            _ => {
-                    eprintln!("You need to enter either kg or lbs!");
-                    get_unit_type(input, weight, increment)
-        }
+//Function to generate a list of plates that are available to the user based on what weight unit
+//the plates are in
+pub fn get_available_plates() -> Vec<(f64, u32)> {
+    let mut units = String::new();
+    let available_plates: Vec<(f64, u32)> = Vec::new();
+    println!("Please select which of the following types of plates you are using:\n1. Metric (Kg)\n2.Imperial (Lbs)");
+
+    io::stdin()
+        .read_line(&mut units)
+        .expect("error");
+    
+    let units: Vec<(f64, u32)> = match units.trim().parse() {
+        Ok(1) => generate_metric_plates(),
+        Ok(2) => generate_imperial_plates(),
+        _ => panic!(""),
     };
+    available_plates
 }
-*/
+
+//Function to generate a list of metric plates available
+fn generate_metric_plates() -> Vec<(f64, u32)> {
+    let metric_plates = vec![25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
+    let mut available_plates: Vec<(f64, u32)> = Vec::new();
+
+    for plate in metric_plates {
+        let mut count = String::new();
+        println!("How many { } kilogram plates do you have available to you?", plate);
+        
+        io::stdin()
+            .read_line(&mut count)
+            .expect("error");
+
+        let count: u32 = match count.trim().parse() {
+            Ok(num) => num,
+            Err(_) => 10,
+        };
+        
+        available_plates.push((plate, count));
+    };
+    available_plates
+}
+
+//Function to generate a list of imperial plates available
+fn generate_imperial_plates() -> Vec<(f64, u32)> {
+    let imperial_plates = vec![55.0, 45.0, 35.0, 25.0, 10.0, 5.0, 2.5];
+    let mut available_plates: Vec<(f64, u32)> = Vec::new();
+
+    for plate in imperial_plates {
+        let mut count = String::new();
+        println!("How many { } pound plates do you have available to you?", plate);
+        
+        io::stdin()
+            .read_line(&mut count)
+            .expect("error");
+
+        let count: u32 = match count.trim().parse() {
+            Ok(num) => num,
+            Err(_) => 10, 
+        };
+    
+        available_plates.push((plate, count))
+    };
+    available_plates
+}

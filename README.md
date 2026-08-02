@@ -37,6 +37,10 @@ aren't Hashable which I think is because of the way bit math works.
 
 TO DO:
 
-- re-organise how the available plates would be stored in memory.
+- ~~re-organise how the available plates would be stored in memory.~~
 - change how the division tuple is represented (w, r) to maybe something more
 descriptive like (res, rem).
+- ~~implement function to obtain a list of plates that are available to the user.~~
+- implement a function to sort those plates.
+- start work on functions that allow a user to add weight to the bar.
+- tidy the code (there's a lot of suggestions under `cargo check` at this time)
