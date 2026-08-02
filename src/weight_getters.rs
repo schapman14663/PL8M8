@@ -25,8 +25,8 @@ pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f6
 
     let input: f64 = match input.trim() {
         "Smart" => {rounding::smart_round(weight, increment)},
-        "Down" => {rounding::round_up(weight, increment)},
-        "Up" => {rounding::round_down(weight, increment)},
+        "Down" => {rounding::round_down(weight, increment)},
+        "Up" => {rounding::round_up(weight, increment)},
         _ => {
                 eprintln!("invalid input");
                 get_rounded_weight(input, weight, increment)
@@ -40,7 +40,7 @@ pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f6
 pub fn get_available_plates() -> Vec<(f64, u32)> {
     let mut units = String::new();
     let available_plates: Vec<(f64, u32)> = Vec::new();
-    println!("Please select which of the following types of plates you are using:\n1. Metric (Kg)\n2.Imperial (Lbs)");
+    println!("Please select which of the following types of plates you are using:\n1.Metric (Kg)\n2.Imperial (Lbs)");
 
     io::stdin()
         .read_line(&mut units)
@@ -74,7 +74,10 @@ fn generate_metric_plates() -> Vec<(f64, u32)> {
         
         available_plates.push((plate, count));
     };
-    available_plates
+    for plate in &available_plates {
+        print!("weight: {}, amount: {}\n", plate.0, plate.1);
+    };
+  available_plates
 }
 
 //Function to generate a list of imperial plates available
@@ -97,5 +100,8 @@ fn generate_imperial_plates() -> Vec<(f64, u32)> {
     
         available_plates.push((plate, count))
     };
-    available_plates
+    for plate in &available_plates {
+        print!("weight: {}, amount: {}\n", plate.0, plate.1);
+    };
+   available_plates
 }
