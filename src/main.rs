@@ -46,6 +46,10 @@ fn plate_sort(weight: f64, increment: f64, available_plates: Vec<(f64, f64)>) ->
     //  append (plates, result) to return type 
     //  update remainder to (_, remainder) 
     let barbell_weights: Vec<(f64, f64)> = Vec::new(); 
+    //TODO: include guard against the available_plates Vector having less than 2 plates
+    //Could make use of round_down to make sure it's only ever operating on a usable amount of
+    //plates, this might require me to convert some aspect of the function to a generic number
+    //input/output ????
     barbell_weights
 }
 

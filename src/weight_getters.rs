@@ -68,12 +68,13 @@ fn generate_metric_plates() -> Vec<(f64, u32)> {
             .expect("error");
 
         let count: u32 = match count.trim().parse() {
-            Ok(num) => num,
+            Ok(num) => rounding::round_down(num, 2),
             Err(_) => 10,
         };
         
         available_plates.push((plate, count));
     };
+    println!("Some amounts have been changed to the highest even number below the amount given.");
     for plate in &available_plates {
         print!("weight: {}, amount: {}\n", plate.0, plate.1);
     };
@@ -94,12 +95,13 @@ fn generate_imperial_plates() -> Vec<(f64, u32)> {
             .expect("error");
 
         let count: u32 = match count.trim().parse() {
-            Ok(num) => num,
+            Ok(num) => rounding::round_down(num, 2),
             Err(_) => 10, 
         };
     
         available_plates.push((plate, count))
     };
+    println!("Some amounts have been changed to the highest even number below the amount given.");
     for plate in &available_plates {
         print!("weight: {}, amount: {}\n", plate.0, plate.1);
     };
