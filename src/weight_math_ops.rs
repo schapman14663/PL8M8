@@ -1,7 +1,7 @@
 pub mod rounding {
     use crate::weight_division;
     // Round the input weight down to the nearest multiple of the increment
-    pub fn round_down(weight: f64, increment: f64) -> f64 {
+pub fn round_down(weight: <T>, increment: <T>) -> <T> {
         let (w, _) = weight_division(weight, increment);
         let rounded_weight = w * increment;
         println!("When rounding down the weight is: {:.2}", rounded_weight);
