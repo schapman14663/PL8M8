@@ -40,7 +40,12 @@ pub fn round_down(weight: f64, increment: f64) -> f64 {
 pub fn weight_division(weight: f64, increment: f64) -> (f64, f64) {
     let mut result = 0.0;
     let mut remainder = weight;
-    while remainder >= increment {
+
+    if increment == 0.0 {
+        panic!("No");
+    }
+
+    while remainder >= increment { 
         remainder -= increment;
         println!("{:.2}", remainder); //TODO: remove when better at debugging
         result = result + 1.0;

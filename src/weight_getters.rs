@@ -18,11 +18,13 @@ pub fn get_float(input: &mut String) -> f64 {
 }
 
 //Function to get a rounding type and then round the weight as indicated
+//TODO: This loop does not work and becomes infinite if the wrong entry is provided. Change to a
+//1,2,3 choice
 pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f64 {
     io::stdin()
         .read_line(input)
         .expect("error");
-
+    
     let input: f64 = match input.trim() {
         "Smart" => {rounding::smart_round(weight, increment)},
         "Down" => {rounding::round_down(weight, increment)},
@@ -68,7 +70,8 @@ fn generate_metric_plates() -> Vec<(f64, u32)> {
             .expect("error");
 
         let count: u32 = match count.trim().parse() {
-            Ok(num) => rounding::round_down(num, 2),
+            //conversion to the lowest possible even number of plates
+            Ok(num) => rounding::round_down(num, 2.0) as u32,
             Err(_) => 10,
         };
         
@@ -95,7 +98,8 @@ fn generate_imperial_plates() -> Vec<(f64, u32)> {
             .expect("error");
 
         let count: u32 = match count.trim().parse() {
-            Ok(num) => rounding::round_down(num, 2),
+            //conversion to the lowest possible even number of plates
+            Ok(num) => rounding::round_down(num, 2.0) as u32,
             Err(_) => 10, 
         };
     
