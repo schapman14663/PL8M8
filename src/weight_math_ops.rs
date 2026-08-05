@@ -1,22 +1,22 @@
 pub mod rounding {
     use crate::weight_division;
     // Round the input weight down to the nearest multiple of the increment
-pub fn round_down(weight: <T>, increment: <T>) -> <T> {
-        let (w, _) = weight_division(weight, increment);
-        let rounded_weight = w * increment;
+pub fn round_down(weight: f64, increment: f64) -> f64 {
+        let (res, _) = weight_division(weight, increment);
+        let rounded_weight = res * increment;
         println!("When rounding down the weight is: {:.2}", rounded_weight);
         rounded_weight
     }
 
     // Round the input weight up to the nearest multiple of the increment
     pub fn round_up(weight: f64, increment: f64) -> f64 {
-        let (w, r) = weight_division(weight, increment);
-        if r > 0.0 {
-            let rounded_weight = (w + 1.0) * increment;
+        let (res, rem) = weight_division(weight, increment);
+        if rem > 0.0 {
+            let rounded_weight = (res + 1.0) * increment;
             println!("When rounding up the weight is: {:.2}", rounded_weight);
             rounded_weight
         } else {
-            let rounded_weight = w * increment;
+            let rounded_weight = res * increment;
             println!("When rounding up the weight is: {:.2}", rounded_weight);
             rounded_weight
         }
@@ -24,8 +24,8 @@ pub fn round_down(weight: <T>, increment: <T>) -> <T> {
 
     // Round the input weight to the nearest multiple of the increment regardless of direction
     pub fn smart_round(weight: f64, increment: f64) -> f64 {
-        let (_,r) = weight_division(weight, increment);
-        let remainder_ratio = r/increment;
+        let (_,rem) = weight_division(weight, increment);
+        let remainder_ratio = rem/increment;
         if remainder_ratio > 0.5 {
             round_up(weight, increment)
         } else {
