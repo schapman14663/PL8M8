@@ -1,5 +1,5 @@
 use std::io;
-use crate::weight_math_ops::{weight_division, rounding};
+use crate::weight_math_ops::rounding;
 
 //Function to take a String input and convert it into a float
 pub fn get_float(input: &mut String) -> f64 {
@@ -48,7 +48,7 @@ pub fn get_available_plates() -> Vec<(f64, u32)> {
         .read_line(&mut units)
         .expect("error");
     
-    let units: Vec<(f64, u32)> = match units.trim().parse() {
+    let _units: Vec<(f64, u32)> = match units.trim().parse() {
         Ok(1) => generate_metric_plates(),
         Ok(2) => generate_imperial_plates(),
         _ => panic!(""),

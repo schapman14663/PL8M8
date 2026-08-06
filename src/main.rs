@@ -1,5 +1,4 @@
-use std::{io, collections::HashMap};
-use crate::weight_math_ops::{weight_division, rounding};
+use crate::weight_math_ops::weight_division;
 use crate::weight_getters::{get_float, get_rounded_weight, get_available_plates}; 
 //use crate::weight_structs;
 
@@ -10,8 +9,6 @@ pub mod weight_getters;
 //TODO: Clean Up Notes
 
 fn main() {
-    println!("Hello, world!");
-
     let mut weight = String::new();
     let mut increment = String::new();
     let mut rounding_type = String::new();
@@ -30,26 +27,30 @@ fn main() {
     println!("Your rounded weight is {rounded_weight}");
 
     let available_plates = get_available_plates(); 
-//  plate_sort(rounded_weight, increment, available_plates);
+    let barbell = plate_sort(rounded_weight, increment, available_plates);
+    for weight in barbell {
+        print!("weight: {}, count: {}\n", weight.0, weight.1);
+    };
 }
 
-//TODO: Draft Function that turns Inputs into a map(?) indicating how many of which plates go on
+//TODO: Draft Function that turns Inputs into a Vector indicating how many of which plates go on
 //each side. 
-fn plate_sort(weight: f64, increment: f64, available_plates: Vec<(f64, f64)>) -> Vec<(f64, f64)> {
-    //available_plates will be the relevant metric/imperial plate set as indicated in the units
-    //section.
-    //
-    //let mut remainder = weight much like weight_divsion() works.
-    //
-    //loop through available_plates while plates > 2 * increment:
-    //  call division for weight and (plates * 2)
-    //  append (plates, result) to return type 
-    //  update remainder to (_, remainder) 
-    let barbell_weights: Vec<(f64, f64)> = Vec::new(); 
-    //TODO: include guard against the available_plates Vector having less than 2 plates
-    //Could make use of round_down to make sure it's only ever operating on a usable amount of
-    //plates, this might require me to convert some aspect of the function to a generic number
-    //input/output ????
+fn plate_sort(weight: f64, increment: f64, available_plates: Vec<(f64, u32)>) -> Vec<(f64, u32)> {
+    let current_weight = weight;
+    let plates_iter = available_plates.iter();
+    let mut barbell_weights: Vec<(f64, u32)> = Vec::new(); 
+    
+    for plate in plates_iter {
+        print!("{}", plate.0);
+/*        let two_plate = plate.0 * 2 as f64;
+        let (plate_pair_count, new_weight) = weight_division(current_weight, two_plate);
+
+        print!("{} , {}\n", plate.0, plate_pair_count);
+        barbell_weights.push((plate.0,plate_pair_count as u32));
+        let current_weight = new_weight;
+*/
+    }
+    println!("Done");
     barbell_weights
 }
 
