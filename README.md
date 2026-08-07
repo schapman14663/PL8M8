@@ -38,9 +38,18 @@ aren't Hashable which I think is because of the way bit math works.
 TO DO:
 
 - ~~re-organise how the available plates would be stored in memory.~~
-- change how the division tuple is represented (w, r) to maybe something more
-descriptive like (res, rem).
+- ~~change how the division tuple is represented (w, r) to maybe something more
+descriptive like (res, rem).~~
 - ~~implement function to obtain a list of plates that are available to the user.~~
 - implement a function to sort those plates.
 - start work on functions that allow a user to add weight to the bar.
 - tidy the code (there's a lot of suggestions under `cargo check` at this time)
+- implement generics and reduce reliance on things like `<f64> as u32`
+- implement a logger
+- improve debugging
+
+Current Issues (7 Aug 26)
+
+- There is an issue with `get_rounded_weight` where it will not recur correctly
+- The `plate_sort` function does not seem to actually perform its loop for some
+reason
