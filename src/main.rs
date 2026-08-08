@@ -27,28 +27,30 @@ fn main() {
     println!("Your rounded weight is {rounded_weight}");
 
     let available_plates = get_available_plates(); 
-    let barbell = plate_sort(rounded_weight, increment, available_plates);
-    for weight in barbell {
-        print!("weight: {}, count: {}\n", weight.0, weight.1);
-    };
+ 
+    plate_sort(rounded_weight, available_plates);
 }
 
 //TODO: Draft Function that turns Inputs into a Vector indicating how many of which plates go on
 //each side. 
-fn plate_sort(weight: f64, increment: f64, available_plates: Vec<(f64, u32)>) -> Vec<(f64, u32)> {
+fn plate_sort(weight: f64, available_plates: Vec<(f64, u32)>) -> Vec<(f64, u32)> {
+
+    for p in &available_plates {
+        print!("{} , {}\n", p.0, p.1);
+    }
+
     let current_weight = weight;
     let plates_iter = available_plates.iter();
     let mut barbell_weights: Vec<(f64, u32)> = Vec::new(); 
     
     for plate in plates_iter {
         print!("{}", plate.0);
-/*        let two_plate = plate.0 * 2 as f64;
+        let two_plate = plate.0 * 2.0;
         let (plate_pair_count, new_weight) = weight_division(current_weight, two_plate);
 
         print!("{} , {}\n", plate.0, plate_pair_count);
-        barbell_weights.push((plate.0,plate_pair_count as u32));
+        barbell_weights.push((plate.0, plate_pair_count as u32));
         let current_weight = new_weight;
-*/
     }
     println!("Done");
     barbell_weights

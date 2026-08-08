@@ -41,27 +41,26 @@ pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f6
 //the plates are in
 pub fn get_available_plates() -> Vec<(f64, u32)> {
     let mut units = String::new();
-    let available_plates: Vec<(f64, u32)> = Vec::new();
+    let mut available_plates: Vec<(f64, u32)> = Vec::new();
     println!("Please select which of the following types of plates you are using:\n1.Metric (Kg)\n2.Imperial (Lbs)");
 
     io::stdin()
         .read_line(&mut units)
         .expect("error");
     
-    let _units: Vec<(f64, u32)> = match units.trim().parse() {
-        Ok(1) => generate_metric_plates(),
-        Ok(2) => generate_imperial_plates(),
+     let plates: Vec<f64> = match units.trim().parse() {
+        Ok(1) => {
+            let plates = vec![25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
+            plates
+        }, 
+        Ok(2) => {
+            let plates = vec![55.0, 45.0, 35.0, 25.0, 10.0, 5.0, 2.5];
+            plates
+        },
         _ => panic!(""),
     };
-    available_plates
-}
 
-//Function to generate a list of metric plates available
-fn generate_metric_plates() -> Vec<(f64, u32)> {
-    let metric_plates = vec![25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
-    let mut available_plates: Vec<(f64, u32)> = Vec::new();
-
-    for plate in metric_plates {
+    for plate in plates {
         let mut count = String::new();
         println!("How many { } kilogram plates do you have available to you?", plate);
         
@@ -77,37 +76,12 @@ fn generate_metric_plates() -> Vec<(f64, u32)> {
         
         available_plates.push((plate, count));
     };
+
     println!("Some amounts have been changed to the highest even number below the amount given.");
+
     for plate in &available_plates {
         print!("weight: {}, amount: {}\n", plate.0, plate.1);
     };
-  available_plates
-}
 
-//Function to generate a list of imperial plates available
-fn generate_imperial_plates() -> Vec<(f64, u32)> {
-    let imperial_plates = vec![55.0, 45.0, 35.0, 25.0, 10.0, 5.0, 2.5];
-    let mut available_plates: Vec<(f64, u32)> = Vec::new();
-
-    for plate in imperial_plates {
-        let mut count = String::new();
-        println!("How many { } pound plates do you have available to you?", plate);
-        
-        io::stdin()
-            .read_line(&mut count)
-            .expect("error");
-
-        let count: u32 = match count.trim().parse() {
-            //conversion to the lowest possible even number of plates
-            Ok(num) => rounding::round_down(num, 2.0) as u32,
-            Err(_) => 10, 
-        };
-    
-        available_plates.push((plate, count))
-    };
-    println!("Some amounts have been changed to the highest even number below the amount given.");
-    for plate in &available_plates {
-        print!("weight: {}, amount: {}\n", plate.0, plate.1);
-    };
-   available_plates
+    available_plates
 }
