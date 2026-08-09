@@ -3,6 +3,7 @@ use crate::weight_math_ops::rounding;
 
 //Function to take a String input and convert it into a float
 pub fn get_float(input: &mut String) -> f64 {
+    println!("Function Call: 'get_float'");
     io::stdin()
         .read_line(input)
         .expect("error");
@@ -21,6 +22,7 @@ pub fn get_float(input: &mut String) -> f64 {
 //TODO: This loop does not work and becomes infinite if the wrong entry is provided. Change to a
 //1,2,3 choice
 pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f64 {
+    println!("Function Call: 'get_rounded_weight'");
     io::stdin()
         .read_line(input)
         .expect("error");
@@ -40,6 +42,7 @@ pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f6
 //Function to generate a list of plates that are available to the user based on what weight unit
 //the plates are in
 pub fn get_available_plates() -> Vec<(f64, u32)> {
+    println!("Function Call: 'get_available_plates'");
     let mut units = String::new();
     let mut available_plates: Vec<(f64, u32)> = Vec::new();
     println!("Please select which of the following types of plates you are using:\n1.Metric (Kg)\n2.Imperial (Lbs)");
@@ -62,7 +65,7 @@ pub fn get_available_plates() -> Vec<(f64, u32)> {
 
     for plate in plates {
         let mut count = String::new();
-        println!("How many { } kilogram plates do you have available to you?", plate);
+        println!("How many {} kilogram plates do you have available to you?", plate);
         
         io::stdin()
             .read_line(&mut count)
