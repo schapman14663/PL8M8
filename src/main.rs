@@ -34,17 +34,39 @@ fn main() {
 
 
 fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>) -> Vec<(f64, u32)> {
-    
+    print!("Function Call: 'plate_sort'\n");
     let mut barbell_weights: Vec<(f64, u32)> = Vec::new();
-    let (plate_count, current_weight) = weight_division(weight, available_plates[x].0);
+    let plate_pair = 2.0 * available_plates[x].0;
+    let available_plate_count = available_plates[x].1;
+
+    let (plate_count, current_weight) = weight_division(weight, plate_pair);
+
+    //TODO: Implement Logic to prevent ""using"" more plates than are available
+    plate_availability_check(current_weight, plate_pair, plate_count, available_plate_count);
+
     barbell_weights.push((available_plates[x].0, plate_count as u32));
     
     let x = x + 1;
     
-    if x != available_plates.len() {
+    if x != available_plates.len() && current_weight > 0.0 {
         plate_sort(x, current_weight, available_plates);
     }
+    
+    for plate in &barbell_weights {
+        if plate.1 != 0 {
+            print!("\nWeight: {}, Number of Plates on each side: {}\n", plate.0, plate.1);
+        }
+    }
     barbell_weights
+}
+
+fn plate_availability_check(current_weight: f64, plate_pair: f64, plate_count: f64, available_plate_count: u32) -> f64 {
+    if plate_count as u32 > available_plate_count {
+        let extra_weight = (plate_count as u32 - available_plate_count) * plate_pair as u32;
+        let current_weight = current_weight + extra_weight as f64;
+        return current_weight;
+    }
+    current_weight
 }
 
 //TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
