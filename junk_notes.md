@@ -20,3 +20,15 @@ gym where there's not that many people around.
 
 Imperial Plates (lbs): [55,45… 5]
 Metric Plates (kgs): [25, 20, 15, 10, 5, 2.5, 1.25]
+
+
+-- Need to call division for weight and 2 * plate, then call division for remaining weight and 2 * next plate.
+let x = 0
+let l = len vector
+let a,b = division (weight, 2*first_plate)
+append (plate, a) to vector
+
+
+if b > 0 && x =< l {
+  plate_sort(b, vec\[y\])
+} 

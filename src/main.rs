@@ -1,10 +1,8 @@
 use crate::weight_math_ops::weight_division;
 use crate::weight_getters::{get_float, get_rounded_weight, get_available_plates}; 
-//use crate::weight_structs;
 
 pub mod weight_math_ops;
 pub mod weight_getters;
-//pub mod weight_structs;
 
 //TODO: Clean Up Notes
 
@@ -28,33 +26,24 @@ fn main() {
 
     let available_plates = get_available_plates(); 
  
-    plate_sort(rounded_weight, available_plates);
+    plate_sort(0, rounded_weight, available_plates);
 }
 
 //TODO: Draft Function that turns Inputs into a Vector indicating how many of which plates go on
 //each side. 
-fn plate_sort(weight: f64, available_plates: Vec<(f64, u32)>) -> Vec<(f64, u32)> {
 
-    println!("Function Call: 'plate_sort'\nAvailable Plates Received:");
+
+fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>) -> Vec<(f64, u32)> {
     
-    for p in &available_plates {
-        print!("Weight: {} , Number of Plate: {}\n", p.0, p.1);
-    }
-
-    let current_weight = weight;
-    let plates_iter = available_plates.iter();
-    let mut barbell_weights: Vec<(f64, u32)> = Vec::new(); 
+    let mut barbell_weights: Vec<(f64, u32)> = Vec::new();
+    let (plate_count, current_weight) = weight_division(weight, available_plates[x].0);
+    barbell_weights.push((available_plates[x].0, plate_count as u32));
     
-    for plate in plates_iter {
-        print!("Weight to be divided by: {}\n", plate.0);
-        let two_plate = plate.0 * 2.0;
-        let (plate_pair_count, new_weight) = weight_division(current_weight, two_plate);
-
-        print!("Weight to add to bar: {} , Number of Plates Needed: {}\n", plate.0, plate_pair_count);
-        barbell_weights.push((plate.0, plate_pair_count as u32));
-        let current_weight = new_weight;
+    let x = x + 1;
+    
+    if x != available_plates.len() {
+        plate_sort(x, current_weight, available_plates);
     }
-    println!("Done");
     barbell_weights
 }
 
