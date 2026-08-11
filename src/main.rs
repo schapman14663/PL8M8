@@ -19,7 +19,7 @@ fn main() {
 
     println!("Your Set Weight is {weight} and your increments are {increment}");
     
-    println!("Would you like to round down, round up, or round to the actual nearest increment (smart)?");
+    println!("Please enter a number to select an option below take make sure your weight is multiple of the increment you entered:\n1.Round Up\n2.Round Down\n3.Smart (nearest multiple regardless of direction)");
     let rounded_weight = get_rounded_weight(&mut rounding_type, weight, increment);
     
     println!("Your rounded weight is {rounded_weight}");

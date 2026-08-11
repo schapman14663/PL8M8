@@ -27,11 +27,11 @@ pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f6
         .read_line(input)
         .expect("error");
     
-    let input: f64 = match input.trim() {
-        "Smart" => {rounding::smart_round(weight, increment)},
-        "Down" => {rounding::round_down(weight, increment)},
-        "Up" => {rounding::round_up(weight, increment)},
-        _ => {
+    let input: f64 = match input.trim().parse() {
+        Ok(1) => {rounding::round_up(weight, increment)},
+        Ok(2) => {rounding::round_down(weight, increment)},
+        Ok(_) => {rounding::smart_round(weight, increment)},
+        Err(_) => {
                 eprintln!("invalid input");
                 get_rounded_weight(input, weight, increment)
         }
