@@ -1,12 +1,17 @@
+use std::path;
+//use crate::logging::log_event;
 use crate::weight_math_ops::weight_division;
 use crate::weight_getters::{get_float, get_rounded_weight, get_available_plates}; 
 
+pub mod logging;
 pub mod weight_math_ops;
 pub mod weight_getters;
 
 //TODO: Clean Up Notes
 
 fn main() {
+    let log_dir = path::Path::new("/tmp/");
+
     let mut weight = String::new();
     let mut increment = String::new();
     let mut rounding_type = String::new();
@@ -26,15 +31,15 @@ fn main() {
 
     let available_plates = get_available_plates(); 
  
-    plate_sort(0, rounded_weight, available_plates);
+    plate_sort(0, rounded_weight, available_plates, log_dir);
 }
 
 //TODO: Draft Function that turns Inputs into a Vector indicating how many of which plates go on
 //each side. 
 
 
-fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>) -> Vec<(f64, u32)> {
-    print!("Function Call: 'plate_sort'\n");
+fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>, log_dir: &path::Path) -> Vec<(f64, u32)> {
+    logging::log_event(log_dir, "Function Call: 'plate_sort'\n");
     let mut barbell_weights: Vec<(f64, u32)> = Vec::new();
     let plate_pair = 2.0 * available_plates[x].0;
     let available_plate_count = available_plates[x].1;
@@ -49,7 +54,7 @@ fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>) -> Vec<(
     let x = x + 1;
     
     if x != available_plates.len() && current_weight > 0.0 {
-        plate_sort(x, current_weight, available_plates);
+        plate_sort(x, current_weight, available_plates, log_dir);
     }
     
     for plate in &barbell_weights {
