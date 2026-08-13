@@ -10,7 +10,9 @@ pub mod weight_getters;
 //TODO: Clean Up Notes
 
 fn main() {
+
     let log_dir = path::Path::new("/tmp/");
+    logging::init_log(log_dir);
 
     let mut weight = String::new();
     let mut increment = String::new();
