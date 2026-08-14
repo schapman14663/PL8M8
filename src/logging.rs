@@ -6,11 +6,10 @@ pub fn log_event(dir: &path::Path, log_message: &str) {
     let now = Utc::now();
     let today = now.date_naive();
     let log_file = fs::OpenOptions::new().read(true).create(true).append(true).open(dir.join("app_log_file.txt"));
+    //TODO: consider changing the log file naming convention
 
-    print!("{:?}", &log_file);
     let _ = writeln!(&log_file.unwrap(), "[{}-{:02}-{:02}  {:02}:{:02}:{:02}]  {}", today.year(), today.month(), today.day(), now.hour(), now.minute(), now.second(), log_message);
     //TODO: Idiotmatic Handling of this since it *can* error
-    print!("{}", log_message);
 
 
     //TODO: Move logging messages to use this function
