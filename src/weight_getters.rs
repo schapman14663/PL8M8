@@ -36,12 +36,11 @@ pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f6
     let input: f64 = match input.trim().parse() {
         Ok(1) => {rounding::round_up(weight, increment)},
         Ok(2) => {rounding::round_down(weight, increment)},
-        Ok(_) => {rounding::smart_round(weight, increment)},
-        Err(_) => {
-                let err_msg = format!("invalid input, input received: {}", input);
+        _ => {
+                let err_msg = format!("invalid input, input received: {}, defaulting to smart rounding", input);
                 logging::log_event(log_dir, &err_msg);
-                get_rounded_weight(input, weight, increment)
-        }
+                rounding::smart_round(weight, increment)
+        }   
     };
     input
 }
