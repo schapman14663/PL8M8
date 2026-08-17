@@ -81,3 +81,15 @@ fn plate_availability_check(current_weight: f64, plate_pair: f64, plate_count: f
 
 //TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
 //plate changes needed to get to that weight. 
+//
+//This will be a function with an input (old_weight, new_weight, barbell_weights: Vec<f64, u32>) -> Vec<f64, u32> {
+//  
+//  let var = plate sort the new weight.
+//  
+//  if new_weight < old_weight:
+//      return var
+//
+//  compare var to barbell_weights where if they are the same then do nothing, if they are
+//  different add the difference.
+//
+//}

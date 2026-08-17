@@ -85,3 +85,41 @@ pub fn weight_division(weight: f64, increment: f64) -> (f64, f64) {
     logging::log_event(log_dir, &log_msg); 
     (result, remainder)
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::weight_math_ops::rounding::{round_up, round_down, smart_round};
+
+    #[test]
+    fn round_down_test() {
+        let result = round_down(79.8, 2.0);
+        assert_eq!(result, 78.0);
+    }
+    #[test]
+    fn round_up_test() {
+        let result = round_up(760.4, 4.0);
+        assert_eq!(result, 764.0);
+    }
+    #[test]
+    fn smart_round_down_test() {
+        let result = smart_round(93.725, 2.5);
+        assert_eq!(result, 92.5);
+    }
+   #[test]
+    fn smart_round_up_test() {
+        let result = smart_round(593.533, 8.3);
+        assert_eq!(result, 597.6);
+    }
+    #[test]
+    fn weight_div_test() {
+        let result = weight_division(102.0, 2.5);
+        assert_eq!(result, (40.0, 2.0));
+    }
+    #[test] 
+    #[should_panic]
+    fn weight_div_panic_test() {
+        weight_division(102.0, 0.0);
+    }
+}
