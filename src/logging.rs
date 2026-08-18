@@ -23,3 +23,16 @@ pub fn init_log(dir: &path::Path) {
         let _ = fs::remove_file(log_file); //TODO: Idiotmatic Handling of this since it *can* error
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::{fs, path};
+    use crate::logging::init_log;
+    
+    #[test]
+    fn init_log_test() {
+        let log_dir = path::Path::new("/tmp/");
+        init_log(log_dir);
+        assert!(!fs::exists("/tmp/app_log_file.txt").expect("Can't check existence of file /tmp/app_log_file.txt"));
+    } 
+}

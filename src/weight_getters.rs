@@ -102,3 +102,5 @@ pub fn get_available_plates() -> Vec<(f64, u32)> {
 
     available_plates
 }
+
+//Testing all of these requires mocking
