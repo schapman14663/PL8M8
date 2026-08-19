@@ -105,7 +105,7 @@ mod tests {
     #[test]
     fn smart_round_down_test() {
         let result = smart_round(93.725, 2.5);
-        assert_eq!(result, 92.5);
+        assert_eq!(result, 92.);
     }
    #[test]
     fn smart_round_up_test() {

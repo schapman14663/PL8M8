@@ -16,6 +16,8 @@ pub fn log_event(dir: &path::Path, log_message: &str) {
     //TODO: Delete previous file or add date-time to file name
 }
 
+//This actually just clears a previous logging file to make sure the first call to log_event
+//generates a new log file.
 pub fn init_log(dir: &path::Path) {
     let log_file = dir.join("app_log_file.txt");
 

@@ -47,10 +47,33 @@ fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>, log_dir:
     let available_plate_count = available_plates[x].1;
 
     let (plate_count, current_weight) = weight_division(weight, plate_pair);
+    println!("current weight: {}", current_weight);
 
+    if plate_count as u32 * 2 > available_plate_count {
+        let plate_diff = plate_count as u32 * 2  - available_plate_count;
+        let plate_count = available_plate_count / 2;
+
+        let new_weight: f64 = current_weight + (plate_diff as f64 * plate_pair)/2.0;
+        println!("new weight: {}", new_weight);
+
+        barbell_weights.push((available_plates[x].0, plate_count as u32));
+
+        let x = x + 1;
+    
+        if x != available_plates.len() && new_weight > 0.0 {
+            plate_sort(x, new_weight, available_plates, log_dir); 
+        }
+        
+        for plate in &barbell_weights {
+            if plate.1 != 0 {
+                print!("\nWeight: {}, Number of Plates on each side: {}\n", plate.0, plate.1);
+            }
+        }
+        barbell_weights
+    } else {
     //TODO: Implement Logic to prevent ""using"" more plates than are available
-    plate_availability_check(current_weight, plate_pair, plate_count, available_plate_count);
-    print!("{}\n", current_weight);
+//    plate_availability_check(current_weight, plate_pair, plate_count, available_plate_count);
+//    print!("{}\n", current_weight);
 
     barbell_weights.push((available_plates[x].0, plate_count as u32));
     
@@ -66,19 +89,25 @@ fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>, log_dir:
         }
     }
     barbell_weights
+    }
 }
 
 //TODO: something is broken about this.
-fn plate_availability_check(current_weight: f64, plate_pair: f64, plate_count: f64, available_plate_count: u32) -> f64 {
-    if plate_count as u32 > available_plate_count {
-        let extra_weight = (plate_count as u32 - available_plate_count) * plate_pair as u32;
-        let current_weight = current_weight + extra_weight as f64;
-        return current_weight;
-    }
-    
-    current_weight
-}
+/*fn plate_availability_check(current_weight: f64, plate_pair: f64, plate_count: f64, available_plate_count: u32) -> f64 {
+    let plate_count_2 = plate_count as u32 * 2;
+    let plate_diff = plate_count_2 as u32 - available_plate_count;
+    let mut new_weight = 0.0;
+    let mut extra_weight = 0.0;
 
+    if plate_diff > 0 {
+       let extra_weight = plate_diff * plate_pair as u32;
+    }
+
+    let new_weight = current_weight + extra_weight as f64;
+    println!("new weight: {}", new_weight);
+    new_weight
+}
+*/
 //TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
 //plate changes needed to get to that weight. 
 //
