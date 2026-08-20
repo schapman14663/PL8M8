@@ -23,8 +23,8 @@ pub fn get_float(input: &mut String) -> f64 {
 }
 
 //Function to get a rounding type and then round the weight as indicated
-//TODO: This loop does not work and becomes infinite if the wrong entry is provided. Change to a
-//1,2,3 choice
+//currently defaults to smart_round, final implementation is not expected to be an ask for input
+//set up
 pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f64 {
     let log_dir = path::Path::new("/tmp/");
     logging::log_event(log_dir, "Function Call: 'get_rounded_weight'\n");
