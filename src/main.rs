@@ -47,7 +47,7 @@ fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>, log_dir:
         let new_weight: f64 = current_weight + (plate_diff as f64 * plate_pair)/2.0;
         println!("new weight: {}", new_weight);
 
-        barbell_weights.push((available_plates[x].0, plate_count as u32));
+        barbell_weights.push((available_plates[x].0, plate_count));
 
         let x = x + 1;
     

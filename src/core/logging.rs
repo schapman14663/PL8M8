@@ -30,7 +30,7 @@ pub fn init_log(dir: &path::Path) {
 #[cfg(test)]
 mod tests {
     use std::{fs, path};
-    use crate::logging::init_log;
+    use super::*;
     
     #[test]
     fn init_log_test() {

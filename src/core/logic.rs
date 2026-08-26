@@ -13,7 +13,7 @@ pub fn get_float(input: &mut String) -> f64 {
     let input: f64 = match input.trim().parse() {
         Ok(num) => num,
         Err(_) => {
-            let err_msg = format!("expected float, found something else");
+            let err_msg = "expected float, found something else".to_string();
             logging::log_event(log_dir, &err_msg);
             get_float(input)
         }
@@ -68,7 +68,7 @@ pub fn get_available_plates() -> Vec<(f64, u32)> {
             plates
         },
         _ => {
-            let err_msg = format!("Expected a value of 1 or 2, received something else");
+            let err_msg = "Expected a value of 1 or 2, received something else".to_string();
             logging::log_event(log_dir, &err_msg);
             println!("received an incorrect input, defaulting to Kilogram plates");
             let plates = vec![25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
@@ -96,7 +96,7 @@ pub fn get_available_plates() -> Vec<(f64, u32)> {
     println!("Some amounts have been changed to the highest even number below the amount given.");
 
     for plate in &available_plates {
-        print!("weight: {}, amount: {}\n", plate.0, plate.1);
+        println!("weight: {}, amount: {}", plate.0, plate.1);
     };
 
     available_plates
@@ -178,7 +178,7 @@ pub fn weight_division(weight: f64, increment: f64) -> (f64, f64) {
 
     while remainder >= increment { 
         remainder -= increment;
-        result = result + 1.0;
+        result += 1.0;
         let log_msg = format!("result so far: {:.2}, weight remaining: {:.2}", result, remainder);
         logging::log_event(log_dir, &log_msg);
     };
@@ -191,7 +191,7 @@ pub fn weight_division(weight: f64, increment: f64) -> (f64, f64) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::weight_math_ops::rounding::{round_up, round_down, smart_round};
+    use crate::logic::rounding::{round_up, round_down, smart_round};
 
     #[test]
     fn round_down_test() {
@@ -206,7 +206,7 @@ mod tests {
     #[test]
     fn smart_round_down_test() {
         let result = smart_round(93.725, 2.5);
-        assert_eq!(result, 92.);
+        assert_eq!(result, 92.5);
     }
    #[test]
     fn smart_round_up_test() {
