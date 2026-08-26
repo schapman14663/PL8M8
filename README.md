@@ -35,29 +35,34 @@ plates do exist and need to be usable, the gym I go to personally has 1.25 kg
 plates) because you can't use a float as a key since they don't implement Eq and
 aren't Hashable which I think is because of the way bit math works.
 
-# TO DO:
+## TO DO
 
-## CORE:
+### CORE
+
 - ~~re-organise how the available plates would be stored in memory.~~ DONE
 - ~~change how the division tuple is represented (w, r) to maybe something more
 descriptive like (res, rem).~~ DONE
-- ~~implement function to obtain a list of plates that are available to the user.~~ DONE
+- ~~implement function to obtain a list of plates that are available to  
+the user.~~ DONE
 - ~~implement a function to sort those plates.~~DONE
 - start work on functions that allow a user to add weight to the bar.
-- ~~tidy the code (there's a lot of suggestions under `cargo check` at this time)~~ DONE
+- ~~tidy the code (there's a lot of suggestions under `cargo check`  
+at this time)~~ DONE
 - implement generics and reduce reliance on things like `<f64> as u32`
 - ~~implement a logger~~ DONE
 - improve debugging
 - Update the above readme since some of it will be out of date now.
-- Add to this list to begin working on turning this into an app with a GUI (with iced?) once last few other TO DOs are done.
+- Add to this list to begin working on turning this into an app with a  
+GUI (with iced?) once last few other TO DOs are done.
 
 ## Current Issues (7 Aug 26)
 
-- ~~There is an issue with `get_rounded_weight` where it will not recur correctly~~ Removed Recursion on this function
+- ~~There is an issue with `get_rounded_weight` where it will not recur  
+correctly~~ Removed Recursion on this function
 - ~~The `plate_sort` function does not seem to actually perform its loop for some
 reason~~ Fixed
 
 ## Current Issues (19 Aug 26)
 
 - Duplicate code in the plate sorter
-- Old Available Plates function needs to be removed
+- ~~Old Available Plates function needs to be removed~~ DONE

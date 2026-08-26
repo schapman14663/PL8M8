@@ -1,6 +1,7 @@
 use std::{fs, io::Write, path};
 use chrono::{Datelike, Timelike, Utc};
 
+//function to append to the existing log file. Will create a log file if one is not present
 pub fn log_event(dir: &path::Path, log_message: &str) {
     //set path to logging file
     let now = Utc::now();
@@ -29,7 +30,7 @@ pub fn init_log(dir: &path::Path) {
 #[cfg(test)]
 mod tests {
     use std::{fs, path};
-    use crate::logging::init_log;
+    use super::*;
     
     #[test]
     fn init_log_test() {
