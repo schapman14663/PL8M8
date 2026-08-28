@@ -8,32 +8,43 @@ being that given an amount of available plates in the gym and an amount of weigh
 to be added to the barbell (for now?) PL8M8 would:
 
 - round to the nearest multiple of whatever your programming says your increment
-for weight is, this is usually 2.5kg or 5lbs for barbell activities.
+for weight is, this is usually 2.5kg or 5lbs for upper body exercises, and can be
+around 5kg or 10lbs for lower body exercises depending on the program.
 - determine how many of each sized plate that is available to add to the bar overall.
 
 For example, if you needed to add 60kg to the bar, and you had 1 25kg plate,
 2 20kg plates, 2 15kg plates , 2 10kg plates, 2 5kg plates and 2 2.5kg plates,
 you would be instructed to use both the 20kg plates and both the 10kg plates
-with 1 of each going on either side of the barbell.
+with 1 of each going on either side of the barbell, because you don't have
+enough 35kg plates to put at least one on each side of the bar.
 
 For this, I have implemented a simple division as I want to use both the result
 and the remainder, and this will also give me control over the plate sorting
 algorithm.
 
-I currently am having some issues with exactly how to go about implementing parts
+~~I currently am having some issues with exactly how to go about implementing parts
 of this, a HashMap does not currently seem to be the best idea, and implementing
 a struct also does not feel like the right idea because you can't have a struct
 with a struct in it in rust so, while I might be able to implement a struct for
-PL8M8, this will likely cause issues for LFTR later.
+PL8M8, this will likely cause issues for LFTR later.~~ 
 
-I am intending on trying to change to a tuples based system over the next few
+~~I am intending on trying to change to a tuples based system over the next few
 days, mostly because I don't want to delve into using an external crate at the
 moment, which is something I think would need to be done in order to have a
 HashMap with floats in it. (both Metric and Imperial weight plate sets have
 plates that prevent the use of unsigned integers, i.e. both 2.5 kg and 2.5 lbs
 plates do exist and need to be usable, the gym I go to personally has 1.25 kg
 plates) because you can't use a float as a key since they don't implement Eq and
-aren't Hashable which I think is because of the way bit math works.
+aren't Hashable which I think is because of the way bit math works.~~
+
+The overall result is currently implemented as a Vector consisting of tuples.
+This may not be ideal, but it works for now, scaling up to fully fledged exercise 
+programmes would likely want to implement a database of some kind, but for now, 
+the focus is on making this an interactive Web App. For this, it looks like I'll
+be using Leptos, and will result in changing some of the inputs 
+(the choice of rounding types and the weight type being used) over to enums,
+as well as trying to make some kind of interactive table to replace the get_available_plates
+function.
 
 ## TO DO
 
@@ -53,7 +64,7 @@ at this time)~~ DONE
 - improve debugging
 - Update the above readme since some of it will be out of date now.
 - Add to this list to begin working on turning this into an app with a  
-GUI (with iced?) once last few other TO DOs are done.
+GUI (probably with Leptos and Tauri) once last few other TO DOs are done.
 
 ## Current Issues (7 Aug 26)
 
@@ -66,3 +77,8 @@ reason~~ Fixed
 
 - Duplicate code in the plate sorter
 - ~~Old Available Plates function needs to be removed~~ DONE
+
+
+## Current Issues (28 Aug 26)
+- Need to change rounding and weight types to enums
+- Need to write tests once those are done.
