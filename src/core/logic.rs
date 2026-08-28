@@ -72,55 +72,60 @@ mod get_rounded_weight_tests {
         assert_eq!(result, 140.0);
     }
 }
+
+pub enum WeightUnits {
+    Metric,
+    Imperial,
+}
 //Function to generate a list of plates that are available to the user based on what weight unit
 //the plates are in
-pub fn get_available_plates() -> Vec<(f64, u32)> {
+pub fn get_available_plates(weight_units: WeightUnits) -> Vec<(f64, u32)> {
     let log_dir = path::Path::new("/tmp/");
     logging::log_event(log_dir, "Function Call: 'get_available_plates'\n");
 
-    let mut units = String::new();
     let mut available_plates: Vec<(f64, u32)> = Vec::new();
-    println!(
-        "Please select which of the following types of plates you are using:\n1.Metric (Kg)\n2.Imperial (Lbs)"
-    );
-
-    io::stdin().read_line(&mut units).expect("error");
-
-    let plates: Vec<f64> = match units.trim().parse() {
-        Ok(1) => {
+    match weight_units {
+        WeightUnits::Metric => {
             let plates = vec![25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
-            plates
+            for plate in plates {
+                let mut count = String::new();
+                println!(
+                    "How many {} weight plates do you have available to you?",
+                    plate
+                );
+
+                io::stdin().read_line(&mut count).expect("error");
+
+                let count: u32 = match count.trim().parse() {
+                    //conversion to the lowest possible even number of plates
+                    Ok(num) => rounding::round_down(num, 2.0) as u32,
+                    Err(_) => 10,
+                };
+
+                available_plates.push((plate, count));
+            }
         }
-        Ok(2) => {
+        WeightUnits::Imperial => {
             let plates = vec![55.0, 45.0, 35.0, 25.0, 10.0, 5.0, 2.5];
-            plates
-        }
-        _ => {
-            let err_msg = "Expected a value of 1 or 2, received something else".to_string();
-            logging::log_event(log_dir, &err_msg);
-            println!("received an incorrect input, defaulting to Kilogram plates");
-            let plates = vec![25.0, 20.0, 15.0, 10.0, 5.0, 2.5, 1.25];
-            plates
+            for plate in plates {
+                let mut count = String::new();
+                println!(
+                    "How many {} weight plates do you have available to you?",
+                    plate
+                );
+
+                io::stdin().read_line(&mut count).expect("error");
+
+                let count: u32 = match count.trim().parse() {
+                    //conversion to the lowest possible even number of plates
+                    Ok(num) => rounding::round_down(num, 2.0) as u32,
+                    Err(_) => 10,
+                };
+
+                available_plates.push((plate, count));
+            }
         }
     };
-
-    for plate in plates {
-        let mut count = String::new();
-        println!(
-            "How many {} weight plates do you have available to you?",
-            plate
-        );
-
-        io::stdin().read_line(&mut count).expect("error");
-
-        let count: u32 = match count.trim().parse() {
-            //conversion to the lowest possible even number of plates
-            Ok(num) => rounding::round_down(num, 2.0) as u32,
-            Err(_) => 10,
-        };
-
-        available_plates.push((plate, count));
-    }
 
     println!("Some amounts have been changed to the highest even number below the amount given.");
 
@@ -130,6 +135,24 @@ pub fn get_available_plates() -> Vec<(f64, u32)> {
 
     available_plates
 }
+
+//Not entirely sure how to test this since the function requires inputs at this time.
+/*
+#[cfg(test)]
+mod get_available_plates_tests {
+    use super::*;
+    use crate::logic::WeightUnits::(Metric, Imperial);
+
+    #[test]
+    fn get_metric_plates_test() {
+
+    }
+    #[test]
+    fn get_imperial_plates_test() {
+
+    }
+}
+*/
 
 pub mod rounding {
     use super::weight_division;
@@ -317,5 +340,3 @@ pub fn plate_sort(
         barbell_weights
     }
 }
-
-//TODO: Plate Sort Tests here
