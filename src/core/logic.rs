@@ -22,6 +22,9 @@ pub fn get_float(input: &mut String) -> f64 {
 //Function to get a rounding type and then round the weight as indicated
 //currently defaults to smart_round, final implementation is not expected to be an ask for input
 //set up
+
+//TODO: Enum set up here because the input variable used in this function is the choice between
+//different rounding types. Possibly attach the function to the enum.
 pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f64 {
     let log_dir = path::Path::new("/tmp/");
     logging::log_event(log_dir, "Function Call: 'get_rounded_weight'\n");
@@ -42,6 +45,8 @@ pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f6
     };
     input
 }
+
+//TODO: Tests for get_rounded_weight after its converted to an enum
 
 //Function to generate a list of plates that are available to the user based on what weight unit
 //the plates are in
@@ -156,6 +161,33 @@ pub mod rounding {
     }
 }
 
+//TODO: Move rounding tests here
+#[cfg(test)]
+mod rounding_tests {
+    use crate::logic::rounding::{round_down, round_up, smart_round};
+
+    #[test]
+    fn round_down_test() {
+        let result = round_down(79.8, 2.0);
+        assert_eq!(result, 78.0);
+    }
+    #[test]
+    fn round_up_test() {
+        let result = round_up(760.4, 4.0);
+        assert_eq!(result, 764.0);
+    }
+    #[test]
+    fn smart_round_down_test() {
+        let result = smart_round(93.725, 2.5);
+        assert_eq!(result, 92.5);
+    }
+    #[test]
+    fn smart_round_up_test() {
+        let result = smart_round(593.533, 8.3);
+        assert_eq!(result, 597.6);
+    }
+}
+
 //Divide input weight by available increment weight.
 //Used for rounding to nearest increment weight.
 //Also used to determine how many plates of each available pair to use.
@@ -190,30 +222,9 @@ pub fn weight_division(weight: f64, increment: f64) -> (f64, f64) {
 }
 
 #[cfg(test)]
-mod tests {
+mod weight_div_tests {
     use super::*;
-    use crate::logic::rounding::{round_down, round_up, smart_round};
 
-    #[test]
-    fn round_down_test() {
-        let result = round_down(79.8, 2.0);
-        assert_eq!(result, 78.0);
-    }
-    #[test]
-    fn round_up_test() {
-        let result = round_up(760.4, 4.0);
-        assert_eq!(result, 764.0);
-    }
-    #[test]
-    fn smart_round_down_test() {
-        let result = smart_round(93.725, 2.5);
-        assert_eq!(result, 92.5);
-    }
-    #[test]
-    fn smart_round_up_test() {
-        let result = smart_round(593.533, 8.3);
-        assert_eq!(result, 597.6);
-    }
     #[test]
     fn weight_div_test() {
         let result = weight_division(102.0, 2.5);
@@ -285,3 +296,5 @@ pub fn plate_sort(
         barbell_weights
     }
 }
+
+//TODO: Plate Sort Tests here
