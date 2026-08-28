@@ -11,7 +11,8 @@ fn main() {
 
     let mut weight = String::new();
     let mut increment = String::new();
-    let mut rounding_type = String::new();
+    let rounding_type = logic::RoundingType::RoundUp; //Temp Allocation to stop cargo
+    //complaining
 
     println!("please enter the weight you are meant to be doing this set:");
     let weight = logic::get_float(&mut weight);
@@ -26,7 +27,7 @@ fn main() {
     println!(
         "please enter a number to select an option below take make sure your weight is multiple of the increment you entered:\n1.round up\n2.round down\n3.smart (nearest multiple regardless of direction)"
     );
-    let rounded_weight = logic::get_rounded_weight(&mut rounding_type, weight, increment);
+    let rounded_weight = logic::get_rounded_weight(rounding_type, weight, increment);
 
     println!("your rounded weight is {rounded_weight}");
 

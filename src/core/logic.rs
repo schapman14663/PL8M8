@@ -1,4 +1,7 @@
-use crate::core::logging;
+use crate::core::{
+    logging,
+    logic::rounding::{round_down, round_up, smart_round},
+};
 use std::{io, path};
 
 //Function to take a String input and convert it into a float
@@ -25,29 +28,50 @@ pub fn get_float(input: &mut String) -> f64 {
 
 //TODO: Enum set up here because the input variable used in this function is the choice between
 //different rounding types. Possibly attach the function to the enum.
-pub fn get_rounded_weight(input: &mut String, weight: f64, increment: f64) -> f64 {
+
+pub enum RoundingType {
+    RoundUp,
+    RoundDown,
+    SmartRound,
+}
+
+pub fn get_rounded_weight(rounding_type: RoundingType, weight: f64, increment: f64) -> f64 {
     let log_dir = path::Path::new("/tmp/");
     logging::log_event(log_dir, "Function Call: 'get_rounded_weight'\n");
 
-    io::stdin().read_line(input).expect("error");
-
-    let input: f64 = match input.trim().parse() {
-        Ok(1) => rounding::round_up(weight, increment),
-        Ok(2) => rounding::round_down(weight, increment),
-        _ => {
-            let err_msg = format!(
-                "invalid input, input received: {}, defaulting to smart rounding",
-                input
-            );
-            logging::log_event(log_dir, &err_msg);
-            rounding::smart_round(weight, increment)
-        }
-    };
-    input
+    match rounding_type {
+        RoundingType::RoundUp => round_up(weight, increment),
+        RoundingType::RoundDown => round_down(weight, increment),
+        RoundingType::SmartRound => smart_round(weight, increment),
+    }
 }
 
 //TODO: Tests for get_rounded_weight after its converted to an enum
-
+#[cfg(test)]
+mod get_rounded_weight_tests {
+    use super::*;
+    use crate::logic::RoundingType::{RoundDown, RoundUp, SmartRound};
+    #[test]
+    fn match_round_up_test() {
+        let result = get_rounded_weight(RoundUp, 103.7, 2.5);
+        assert_eq!(result, 105.0);
+    }
+    #[test]
+    fn match_round_down_test() {
+        let result = get_rounded_weight(RoundDown, 186.0, 10.0);
+        assert_eq!(result, 180.0);
+    }
+    #[test]
+    fn match_smart_round_up_test() {
+        let result = get_rounded_weight(SmartRound, 143.0, 5.0);
+        assert_eq!(result, 145.0);
+    }
+    #[test]
+    fn match_smart_round_down_test() {
+        let result = get_rounded_weight(SmartRound, 141.0, 5.0);
+        assert_eq!(result, 140.0);
+    }
+}
 //Function to generate a list of plates that are available to the user based on what weight unit
 //the plates are in
 pub fn get_available_plates() -> Vec<(f64, u32)> {
@@ -111,22 +135,6 @@ pub mod rounding {
     use super::weight_division;
     use crate::logging;
     use std::path;
-
-    // Round the input weight down to the nearest multiple of the increment
-    pub fn round_down(weight: f64, increment: f64) -> f64 {
-        let log_dir = path::Path::new("/tmp/");
-        logging::log_event(log_dir, "Function Call: 'round_down'\n");
-
-        let (res, _) = weight_division(weight, increment);
-        let rounded_weight = res * increment;
-
-        //Send to log. Invokes format so that we can log the variables as well
-        let log_msg = format!("When rounding down the weight is: {:.2}\n", rounded_weight);
-        logging::log_event(log_dir, &log_msg);
-
-        rounded_weight
-    }
-
     // Round the input weight up to the nearest multiple of the increment
     pub fn round_up(weight: f64, increment: f64) -> f64 {
         let log_dir = path::Path::new("/tmp/");
@@ -145,7 +153,20 @@ pub mod rounding {
             rounded_weight
         }
     }
+    // Round the input weight down to the nearest multiple of the increment
+    pub fn round_down(weight: f64, increment: f64) -> f64 {
+        let log_dir = path::Path::new("/tmp/");
+        logging::log_event(log_dir, "Function Call: 'round_down'\n");
 
+        let (res, _) = weight_division(weight, increment);
+        let rounded_weight = res * increment;
+
+        //Send to log. Invokes format so that we can log the variables as well
+        let log_msg = format!("When rounding down the weight is: {:.2}\n", rounded_weight);
+        logging::log_event(log_dir, &log_msg);
+
+        rounded_weight
+    }
     // Round the input weight to the nearest multiple of the increment regardless of direction
     pub fn smart_round(weight: f64, increment: f64) -> f64 {
         let log_dir = path::Path::new("/tmp/");
@@ -167,14 +188,14 @@ mod rounding_tests {
     use crate::logic::rounding::{round_down, round_up, smart_round};
 
     #[test]
-    fn round_down_test() {
-        let result = round_down(79.8, 2.0);
-        assert_eq!(result, 78.0);
-    }
-    #[test]
     fn round_up_test() {
         let result = round_up(760.4, 4.0);
         assert_eq!(result, 764.0);
+    }
+    #[test]
+    fn round_down_test() {
+        let result = round_down(79.8, 2.0);
+        assert_eq!(result, 78.0);
     }
     #[test]
     fn smart_round_down_test() {
