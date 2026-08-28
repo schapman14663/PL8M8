@@ -53,7 +53,7 @@ at this time)~~ DONE
 - improve debugging
 - Update the above readme since some of it will be out of date now.
 - Add to this list to begin working on turning this into an app with a  
-GUI (with iced?) once last few other TO DOs are done.
+GUI (probably with Leptos and Tauri) once last few other TO DOs are done.
 
 ## Current Issues (7 Aug 26)
 

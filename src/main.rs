@@ -1,8 +1,9 @@
-use std::path;
 use crate::core::{logging, logic};
+use std::path;
+
 mod core;
 
-//TODO: Clean Up Notes
+//todo: clean up notes
 
 fn main() {
     let log_dir = path::Path::new("/tmp/");
@@ -12,79 +13,34 @@ fn main() {
     let mut increment = String::new();
     let mut rounding_type = String::new();
 
-    println!("Please Enter the Weight you are meant to be doing this set:");
+    println!("please enter the weight you are meant to be doing this set:");
     let weight = logic::get_float(&mut weight);
 
-    println!("Please Enter the smallest weight increment available\n(e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):");
+    println!(
+        "please enter the smallest weight increment available\n(e.g. if you have 1.25kg plates available the smallest you could add to a barbell is 2.5kg):"
+    );
     let increment = logic::get_float(&mut increment);
 
-    println!("Your Set Weight is {weight} and your increments are {increment}");
-    
-    println!("Please enter a number to select an option below take make sure your weight is multiple of the increment you entered:\n1.Round Up\n2.Round Down\n3.Smart (nearest multiple regardless of direction)");
+    println!("your set weight is {weight} and your increments are {increment}");
+
+    println!(
+        "please enter a number to select an option below take make sure your weight is multiple of the increment you entered:\n1.round up\n2.round down\n3.smart (nearest multiple regardless of direction)"
+    );
     let rounded_weight = logic::get_rounded_weight(&mut rounding_type, weight, increment);
-    
-    println!("Your rounded weight is {rounded_weight}");
 
-    let available_plates = logic::get_available_plates(); 
- 
-    plate_sort(0, rounded_weight, available_plates, log_dir);
-}
+    println!("your rounded weight is {rounded_weight}");
 
-//Function that turns Inputs into a Vector indicating how many of which plates go on each side. 
-fn plate_sort(x: usize, weight: f64, available_plates: Vec<(f64, u32)>, log_dir: &path::Path) -> Vec<(f64, u32)> {
-    logging::log_event(log_dir, "Function Call: 'plate_sort'\n");
-    let mut barbell_weights: Vec<(f64, u32)> = Vec::new();
-    let plate_pair = 2.0 * available_plates[x].0;
-    let available_plate_count = available_plates[x].1;
+    let available_plates = logic::get_available_plates();
 
-    let (plate_count, current_weight) = logic::weight_division(weight, plate_pair);
-    println!("current weight: {}", current_weight);
-
-    if plate_count as u32 * 2 > available_plate_count {
-        let plate_diff = plate_count as u32 * 2  - available_plate_count;
-        let plate_count = available_plate_count / 2;
-
-        let new_weight: f64 = current_weight + (plate_diff as f64 * plate_pair)/2.0;
-        println!("new weight: {}", new_weight);
-
-        barbell_weights.push((available_plates[x].0, plate_count));
-
-        let x = x + 1;
-    
-        if x != available_plates.len() && new_weight > 0.0 {
-            plate_sort(x, new_weight, available_plates, log_dir); 
-        }
-        
-        for plate in &barbell_weights {
-            if plate.1 != 0 {
-                print!("\nWeight: {}, Number of Plates on each side: {}\n", plate.0, plate.1);
-            }
-        }
-        barbell_weights
-    } else {
-    barbell_weights.push((available_plates[x].0, plate_count as u32));
-    
-    let x = x + 1;
-    
-    if x != available_plates.len() && current_weight > 0.0 {
-        plate_sort(x, current_weight, available_plates, log_dir);
-    }
-    
-    for plate in &barbell_weights {
-        if plate.1 != 0 {
-            print!("\nWeight: {}, Number of Plates on each side: {}\n", plate.0, plate.1);
-        }
-    }
-    barbell_weights
-    }
+    logic::plate_sort(0, rounded_weight, available_plates, log_dir);
 }
 
 //TODO: Draft Function that can take an original weight and a new weight, and figure out the fewest
-//plate changes needed to get to that weight. 
+//plate changes needed to get to that weight.
 /*fn change_weight(old_weight: f64, new_weight: f64, barbell_weights: Vec<f64, u32>) -> Vec<f64, u32> {
-  
-    let var = plate_sort(0, new_weight, available_plates, log_dir); 
-  
+
+    let var = plate_sort(0, new_weight, available_plates, log_dir);
+
     if new_weight < old_weight:
         var
 //
